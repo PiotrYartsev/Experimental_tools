@@ -1,5 +1,9 @@
 #plot output current vs input current
 
+
+import numpy as np
+import matplotlib.pyplot as plt
+
 offset=0.03 #Volt
 
 voltage_over_chip=10.00 #Volt
@@ -19,3 +23,9 @@ error_in_voltage_into_potentiometer=0.01 #Volt
 
 voltage_into=[0.00,0.10,0.20,0.30,0.40,0.50,0.60,0.70,0.80,0.90,1.00,1.10,1.20,1.30,1.40]
 voltage_ampligied=[0.02,0.98,2.00,2.92,3.87,4.82,5.74,6.71,7.58,7.83,7.83,7.83,7.83,7.83,7.83]
+
+plt.plot(voltage_into,voltage_ampligied)
+plt.xlabel('Input Voltage (V)')
+plt.ylabel('Output Voltage (V)')
+plt.title('Output Voltage vs Input Voltage')
+plt.show()
