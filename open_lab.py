@@ -53,11 +53,12 @@ C=1.2732*10**(-8)
 
 
 x=numpy.linspace(2000,8000,1000)
-H_abs=lambda w: (R*C*w)/(math.sqrt((1-L*C*w**2)**2 + (R*C*w)**2))
+H_abs=lambda w: ((R*C*w)/(math.sqrt((1-L*C*w**2)**2 + (R*C*w)**2)))
 y_1=[]
 
 for n in range(len(x)):
     y_1.append(H_abs(x[n]))
+    print(y_1[n])
 
 Angle_thing=lambda w: -math.atan((L*C*w**2-1)/(R*C*w))
 #print(y_1)
@@ -76,7 +77,7 @@ plt.ylabel('Output Voltage')
 plt.title('Output Voltage vs Frequencies')
 plt.show()
 
-plt.plot(frequancies_2,offset_in_micro_meter)
+#plt.plot(frequancies_2,offset_in_micro_meter)
 plt.plot(x,y_2)
 plt.xlabel('Frequencies')
 plt.ylabel('Offset in micro meter')
