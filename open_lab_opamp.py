@@ -37,7 +37,7 @@ for volt in voltage_into:
 
 
 plt.plot(voltage_into,Asymptotic_function_list, 'r', linestyle=':')
-plt.plot(voltage_into,voltage_ampligied, 'b')
+plt.plot(voltage_into,voltage_ampligied, 'b.')
 plt.xlabel('Input Voltage (V)')
 plt.ylabel('Output Voltage (V)')
 plt.title('Output Voltage vs Input Voltage')
