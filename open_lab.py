@@ -95,7 +95,7 @@ plt.legend(['Measured values'])
 plt.grid(color='gray', linestyle='--', linewidth=0.5)
 plt.xlim(2000, 8000)
 plt.ylim(min(new_output_voltage))
-plt.show()
+#plt.show()
 
 
 
@@ -119,4 +119,9 @@ plt.legend(['Measured values'])
 plt.grid(color='gray', linestyle='--', linewidth=0.5)
 plt.xlim(2000, 8000)
 
-plt.show()
+#plt.show()
+
+print(max(output_voltage)/20)
+print((max(output_voltage)/20)*(1/(math.sqrt(2))))
+print((output_voltage[4])/20)
+print((output_voltage[8])/20)
