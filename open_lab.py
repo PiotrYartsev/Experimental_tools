@@ -56,7 +56,7 @@ print(len(error_in_offset_in_micro_meter))
 #IN micro seconds 
 R=1000
 L=0.07958
-C=1.2732*10**(-8)
+C=1.2732/(10**(8))
 
 x=numpy.linspace(2000,8000,1000)
 H_abs=lambda w: ((R*C*w)/(math.sqrt((1-L*C*w**2)**2 + (R*C*w)**2)))
@@ -66,19 +66,21 @@ for n in range(len(x)):
     y_1.append(H_abs(x[n]))
     #print(y_1[n])
 
-Angle_thing=lambda w: -math.atan((L*C*w**2-1)/(R*C*w))
+Angle_thing=lambda x: (((L*C*x**2)-1)/(R*C*x))
 #print(y_1)
 
 
 y_2=[]
-for n in range(len(x)):
-    y_2.append(Angle_thing(x[n]))
+for n in x:
+    y_2.append(-numpy.arctan(Angle_thing(n)))
 
 
-plt.plot(frequancies,new_output_voltage,'b')
+plt.plot(frequancies,new_output_voltage,'bx')
+plt.plot(frequancies,new_output_voltage,'r--')
+#plt.plot(x,y_1,'r')
 plt.xlabel('Frequencies')
-plt.ylabel('Output Voltage')
-plt.title('Output Voltage vs Frequencies')
+plt.ylabel("|H|")
+plt.title("|H| vs Frequencies")
 #plt.vlines(turn_a, V_2, V_1, colors='black', linestyles='dashed')
 """
 plt.vlines(turn_b, V_2, V_1, colors='black', linestyles='dashed')
@@ -87,7 +89,9 @@ plt.hlines(V_1,max(voltage_in) , turn_b, colors='black', linestyles='dashed')
 plt.plot([turn_a,turn_a],[V_1,V_2], color='black', linestyle='dashed')
 """
 plt.axhline(0,color='black',linewidth=0.5) # x = 0
-plt.legend(['Measured values',"Therory: "r"$\Theta (\omega) =-arctan(\frac{LC\omega^2 -1}{RC\omega})$"],)
+plt.legend(['Measured values'])
+
+#plt.legend(['Measured values',"Therory: "r"$\Theta (\omega) =-arctan(\frac{LC\omega^2 -1}{RC\omega})$"],)
 plt.grid(color='gray', linestyle='--', linewidth=0.5)
 plt.xlim(2000, 8000)
 plt.ylim(min(new_output_voltage))
@@ -95,10 +99,12 @@ plt.show()
 
 
 
-plt.plot(frequancies_2,differnecen_in_time_stuff,'b')
+plt.plot(frequancies_2,differnecen_in_time_stuff,'bx')
+plt.plot(frequancies_2,differnecen_in_time_stuff,'r--')
+#plt.plot(x,y_2,'r')
 plt.xlabel('Frequencies')
-plt.ylabel('Offset in micro meter')
-plt.title('Offset in micro meter vs Frequencies')
+plt.ylabel(""r"$\Theta (\omega)$")
+plt.title(" "r"$\Theta (\omega)$ vs Frequencies")
 #plt.vlines(turn_a, V_2, V_1, colors='black', linestyles='dashed')
 """
 plt.vlines(turn_b, V_2, V_1, colors='black', linestyles='dashed')
@@ -107,7 +113,10 @@ plt.hlines(V_1,max(voltage_in) , turn_b, colors='black', linestyles='dashed')
 plt.plot([turn_a,turn_a],[V_1,V_2], color='black', linestyle='dashed')
 """
 plt.axhline(0,color='black',linewidth=0.5) # x = 0
-plt.legend(['Measured values',"Therory: "r"$\Theta (\omega) =-arctan(\frac{LC\omega^2 -1}{RC\omega})$"],)
+plt.legend(['Measured values'])
+
+#plt.legend(['Measured values',"Therory: "r"$\Theta (\omega) =-arctan(\frac{LC\omega^2 -1}{RC\omega})$"],)
 plt.grid(color='gray', linestyle='--', linewidth=0.5)
 plt.xlim(2000, 8000)
+
 plt.show()
