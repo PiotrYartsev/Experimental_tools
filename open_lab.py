@@ -26,7 +26,14 @@ start_offset_2_4000hz=10 #micro meter
 error_in_start_offset_2_4000hz=1 #pm micro meter
 
 frequancies_2=[5000,4500, 4000, 3500, 3000, 2500, 2000, 5500 , 6000, 6500, 7000, 7500, 8000]
+time_stuff=[]
+for n in (frequancies_2):
+    time_stuff.append(1/n)
 offset_in_micro_meter=[0,-15.00, -31.40, -47.00 , -61.20, -82.40, -107.2, 11.50, 19.00, 22.00, 22.90, 22.90, 22.90]
+
+
+
+
 
 #order a list from smallest to largest
 def order_list(list_to_order):
@@ -39,7 +46,9 @@ def order_list(list_to_order):
 order_list(frequancies_2)
 order_list(offset_in_micro_meter)
 
-
+differnecen_in_time_stuff=[]
+for n in range(len(time_stuff)):
+    differnecen_in_time_stuff.append(time_stuff[n]-time_stuff[n-1])
 
 error_in_offset_in_micro_meter=[0,0.2,0.2,0.2, 0.2, 0.4, 0.4, 0.1, 0.2, 0.2, 0.2, 0.2, 0.2]
 print(len(frequancies_2))
@@ -50,7 +59,6 @@ print(len(error_in_offset_in_micro_meter))
 R=1000
 L=0.07958
 C=1.2732*10**(-8)
-
 
 x=numpy.linspace(2000,8000,1000)
 H_abs=lambda w: ((R*C*w)/(math.sqrt((1-L*C*w**2)**2 + (R*C*w)**2)))
@@ -70,15 +78,16 @@ for n in range(len(x)):
 
 
 plt.plot(frequancies,new_output_voltage)
-plt.plot(x,y_1)
+#plt.plot(x,y_1)
 
 plt.xlabel('Frequencies')
 plt.ylabel('Output Voltage')
 plt.title('Output Voltage vs Frequencies')
 plt.show()
 
-#plt.plot(frequancies_2,offset_in_micro_meter)
-plt.plot(x,y_2)
+
+plt.plot(frequancies_2,differnecen_in_time_stuff)
+#plt.plot(x,y_2)
 plt.xlabel('Frequencies')
 plt.ylabel('Offset in micro meter')
 plt.title('Offset in micro meter vs Frequencies')
