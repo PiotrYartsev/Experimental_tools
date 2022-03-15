@@ -1,1 +1,1 @@
-linestyle='--'
+print(data)
