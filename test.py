@@ -10,13 +10,13 @@ import sys
 
 CLIENT = Client()
 
-print(CLIENT.ping())
+#print(CLIENT.ping())
 
 #print(CLIENT.get_metadata(scope="mc20", name="mc_v9-8GeV-1e-inclusive_1000_t1588350689.root"))
 os.system("cd; cd rucio-client-venv/bin; source activate")
 L=os.popen("rucio get-metadata mc20:mc_v9-8GeV-1e-inclusive_1000_t1588350689.root").read()
 Q=os.popen("rucio get-metadata mc20:mc_v9-8GeV-1e-inclusive_192_t1588318337.root").read()
-print(Q)
+#print(Q)
 L2=L.split("\n")
 L2=[s.strip('\n') for s in L2]
 L3=[s.split(":") for s in L2]
@@ -42,10 +42,28 @@ data=[]
 for line in range(len(L3)-1):
     otherdata=[]
     data.append([L3[line][0],otherdata])
-#print(data)
+print(data)
 for i in superlist:
     print(i)
-    L3=i
+    break
+    for line in range(len(L3)-1):
+        
+        if data[line][1]==[]:
+            #print(L3[line][1])
+            data[line][1].append([L3[line][1],1])
+        else:
+            for j in range(len(data[line][1])):
+                if data[line][1][j][0]==L3[line][1]:
+                    data[line][1][j][1]+=1
+                    break
+                if j==len(data[line][1])-1:
+                    data[line][1].append([L3[line][1],1])
+                    break
+                else:
+                    data[line][1].append([L3[line][1].replace(" ", ""),1])
+print("\n \n \n")
+for i in range(100):
+    print(L3)
     break
     for line in range(len(L3)-1):
         
