@@ -26,7 +26,11 @@ start_offset_2_4000hz=10 #micro meter
 error_in_start_offset_2_4000hz=1 #pm micro meter
 
 frequancies_2=[5000,4500, 4000, 3500, 3000, 2500, 2000, 5500 , 6000, 6500, 7000, 7500, 8000]
+time_stuff=[]
+for n in (frequancies):
+    time_stuff.append(1/n)
 offset_in_micro_meter=[0,-15.00, -31.40, -47.00 , -61.20, -82.40, -107.2, 11.50, 19.00, 22.00, 22.90, 22.90, 22.90]
+
 
 #order a list from smallest to largest
 def order_list(list_to_order):
@@ -39,18 +43,20 @@ def order_list(list_to_order):
 order_list(frequancies_2)
 order_list(offset_in_micro_meter)
 
-
+differnecen_in_time_stuff=[]
+for n in range(len(time_stuff)):
+    differnecen_in_time_stuff.append(-(offset_in_micro_meter[n]*10**-6)/time_stuff[n])
 
 error_in_offset_in_micro_meter=[0,0.2,0.2,0.2, 0.2, 0.4, 0.4, 0.1, 0.2, 0.2, 0.2, 0.2, 0.2]
-print(len(frequancies_2))
+"""print(len(frequancies_2))
 print(len(offset_in_micro_meter))
 print(len(error_in_offset_in_micro_meter))
+"""
 
 #IN micro seconds 
 R=1000
 L=0.07958
-C=1.2732*10**(-8)
-
+C=1.2732/(10**(8))
 
 x=numpy.linspace(2000,8000,1000)
 H_abs=lambda w: ((R*C*w)/(math.sqrt((1-L*C*w**2)**2 + (R*C*w)**2)))
@@ -58,28 +64,64 @@ y_1=[]
 
 for n in range(len(x)):
     y_1.append(H_abs(x[n]))
-    print(y_1[n])
+    #print(y_1[n])
 
-Angle_thing=lambda w: -math.atan((L*C*w**2-1)/(R*C*w))
+Angle_thing=lambda x: (((L*C*x**2)-1)/(R*C*x))
 #print(y_1)
 
 
 y_2=[]
-for n in range(len(x)):
-    y_2.append(Angle_thing(x[n]))
+for n in x:
+    y_2.append(-numpy.arctan(Angle_thing(n)))
 
 
-plt.plot(frequancies,new_output_voltage)
-plt.plot(x,y_1)
-
+plt.plot(frequancies,new_output_voltage,'bx')
+plt.plot(frequancies,new_output_voltage,'r--')
+#plt.plot(x,y_1,'r')
 plt.xlabel('Frequencies')
-plt.ylabel('Output Voltage')
-plt.title('Output Voltage vs Frequencies')
-plt.show()
+plt.ylabel("|H|")
+plt.title("|H| vs Frequencies")
+#plt.vlines(turn_a, V_2, V_1, colors='black', linestyles='dashed')
+"""
+plt.vlines(turn_b, V_2, V_1, colors='black', linestyles='dashed')
+plt.hlines(V_2,min(voltage_in) , turn_a, colors='black', linestyles='dashed')
+plt.hlines(V_1,max(voltage_in) , turn_b, colors='black', linestyles='dashed')
+plt.plot([turn_a,turn_a],[V_1,V_2], color='black', linestyle='dashed')
+"""
+plt.axhline(0,color='black',linewidth=0.5) # x = 0
+plt.legend(['Measured values'])
 
-#plt.plot(frequancies_2,offset_in_micro_meter)
-plt.plot(x,y_2)
+#plt.legend(['Measured values',"Therory: "r"$\Theta (\omega) =-arctan(\frac{LC\omega^2 -1}{RC\omega})$"],)
+plt.grid(color='gray', linestyle='--', linewidth=0.5)
+plt.xlim(2000, 8000)
+plt.ylim(min(new_output_voltage))
+#plt.show()
+
+
+
+plt.plot(frequancies_2,differnecen_in_time_stuff,'bx')
+plt.plot(frequancies_2,differnecen_in_time_stuff,'r--')
+#plt.plot(x,y_2,'r')
 plt.xlabel('Frequencies')
-plt.ylabel('Offset in micro meter')
-plt.title('Offset in micro meter vs Frequencies')
-plt.show()
+plt.ylabel(""r"$\Theta (\omega)$")
+plt.title(" "r"$\Theta (\omega)$ vs Frequencies")
+#plt.vlines(turn_a, V_2, V_1, colors='black', linestyles='dashed')
+"""
+plt.vlines(turn_b, V_2, V_1, colors='black', linestyles='dashed')
+plt.hlines(V_2,min(voltage_in) , turn_a, colors='black', linestyles='dashed')
+plt.hlines(V_1,max(voltage_in) , turn_b, colors='black', linestyles='dashed')
+plt.plot([turn_a,turn_a],[V_1,V_2], color='black', linestyle='dashed')
+"""
+plt.axhline(0,color='black',linewidth=0.5) # x = 0
+plt.legend(['Measured values'])
+
+#plt.legend(['Measured values',"Therory: "r"$\Theta (\omega) =-arctan(\frac{LC\omega^2 -1}{RC\omega})$"],)
+plt.grid(color='gray', linestyle='--', linewidth=0.5)
+plt.xlim(2000, 8000)
+
+#plt.show()
+
+print(max(output_voltage)/20)
+print((max(output_voltage)/20)*(1/(math.sqrt(2))))
+print((output_voltage[4])/20)
+print((output_voltage[8])/20)
